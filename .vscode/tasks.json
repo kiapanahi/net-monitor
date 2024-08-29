@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "go",
+			"label": "go: build module",
+			"command": "build",
+			"args": [
+				"-o",
+				"${workspaceFolder}\\bin\\nm.exe"
+			],
+			"problemMatcher": [
+				"$go"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "go build"
+		}
+	]
+}
