@@ -17,6 +17,23 @@
 				"isDefault": true
 			},
 			"detail": "go build"
+		},
+		{
+			"type": "go",
+			"label": "go: run tests",
+			"command": "test",
+			"args": [
+				"./...",
+				"-v"
+			],
+			"problemMatcher": [
+				"$go"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"detail": "go test"
 		}
 	]
 }
