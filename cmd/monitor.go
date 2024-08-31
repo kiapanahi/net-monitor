@@ -32,26 +32,27 @@ func showNetworkInterfaces(cmd *cobra.Command, args []string) {
 	if err != nil {
 		log.Fatal().Msgf("Error selecting network interface: %v", err)
 	}
-	log.Info().Msgf("Selected interface: %d %s", idx, str)
+	log.Debug().Msgf("Selected interface: %d %s", idx, str)
 	iface := &ifaces[idx]
 
 	ensureSelectedInterfaceEnabled(iface)
-	log.Info().Msgf("Monitoring interface: %d %s", idx, str)
+	log.Debug().Msgf("Monitoring interface: %d %s", idx, str)
 }
 
 func ensureSelectedInterfaceEnabled(iface *net.Interface) {
 
-	log.Info().Msgf("ensuring interface %s is not a Loopback device, Up and Running", iface.Name)
+	log.Debug().Msgf("ensuring interface %s is not a Loopback device, Up and Running", iface.Name)
 
-	if (*iface).Flags&net.FlagUp == 0 {
-		log.Error().Msgf("Interface %s is down", iface.Name)
+	if iface.Flags&net.FlagUp == 0 {
+		log.Fatal().Msgf("Interface %s is down", iface.Name)
 	}
 
-	if (*iface).Flags&net.FlagLoopback == net.FlagLoopback {
-		log.Error().Msgf("Interface %s is a loopback interface", iface.Name)
+	if iface.Flags&net.FlagLoopback == net.FlagLoopback {
+		log.Fatal().Msgf("Interface %s is a loopback interface", iface.Name)
 	}
 
-	if (*iface).Flags&net.FlagRunning == 0 {
-		log.Error().Msgf("Interface %s is not running", iface.Name)
+	if iface.Flags&net.FlagRunning == 0 {
+		log.Fatal().Msgf("Interface %s is not running", iface.Name)
+
 	}
 }
