@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"net"
+	validator "net-monitor/internal/monitor/nic"
 
 	"github.com/rs/zerolog/log"
 
@@ -35,24 +36,6 @@ func showNetworkInterfaces(cmd *cobra.Command, args []string) {
 	log.Debug().Msgf("Selected interface: %d %s", idx, str)
 	iface := &ifaces[idx]
 
-	ensureSelectedInterfaceEnabled(iface)
+	validator.EnsureSelectedInterfaceEnabled(iface)
 	log.Debug().Msgf("Monitoring interface: %d %s", idx, str)
-}
-
-func ensureSelectedInterfaceEnabled(iface *net.Interface) {
-
-	log.Debug().Msgf("ensuring interface %s is not a Loopback device, Up and Running", iface.Name)
-
-	if iface.Flags&net.FlagUp == 0 {
-		log.Fatal().Msgf("Interface %s is down", iface.Name)
-	}
-
-	if iface.Flags&net.FlagLoopback == net.FlagLoopback {
-		log.Fatal().Msgf("Interface %s is a loopback interface", iface.Name)
-	}
-
-	if iface.Flags&net.FlagRunning == 0 {
-		log.Fatal().Msgf("Interface %s is not running", iface.Name)
-
-	}
 }
